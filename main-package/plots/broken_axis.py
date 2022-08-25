@@ -149,7 +149,7 @@ class BrokenAxis:
         self.set_xticks(ticks)
         self.set_fig_titles()
         self.ax_decorator()
-        plt.savefig('books_read.png', bbox_inches='tight', pad_inches=.3)
+        return self.fig
         
     @staticmethod
     def generate_kwargs() -> BrokenAxisConfig:
