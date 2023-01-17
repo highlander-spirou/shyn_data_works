@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from typing import Optional, Literal
+from typing import Optional, Literal, Union
 
 class AreaChart:
     """
@@ -34,23 +34,27 @@ class AreaChart:
         by_label = dict(zip(labels, handles))
         figure.legend(by_label.values(), by_label.keys(), loc='center left', bbox_to_anchor=(.9, 0.5))
 
-    def __call__(self, plot_type:Literal["single", "scaled", "both"], figsize=(12, 5), column_to_draw:Optional[list]=None, colors='pastel'):
+    def __call__(self, plot_type:Literal["single", "scaled", "both"], figsize=(12, 5), column_to_draw:Optional[list]=None, colors:Union[list, str]='pastel'):
         fig, ax = self.init_fig(plot_type, figsize)
-        colors = sns.color_palette(colors)
+        if type(colors) == str:
+            cmap = sns.color_palette(colors)
+        else:
+            cmap = colors
         
         if plot_type == "single":
-            self.draw_area(ax=ax, df=self.df, column_to_draw=column_to_draw, colors=colors)
+            self.draw_area(ax=ax, df=self.df, column_to_draw=column_to_draw, colors=cmap)
             ax.locator_params(axis="both", integer=True, tight=True)
             
         elif plot_type == "scaled":
-            self.draw_area(ax=ax, df=self.scaled_df, column_to_draw=column_to_draw, colors=colors)
+            self.draw_area(ax=ax, df=self.scaled_df, column_to_draw=column_to_draw, colors=cmap)
             ax.locator_params(axis="both", integer=True, tight=True)
             
         elif plot_type == "both":
-            self.draw_area(ax=ax[0], df=self.df, column_to_draw=column_to_draw, colors=colors)
-            self.draw_area(ax=ax[1], df=self.scaled_df, column_to_draw=column_to_draw, colors=colors)
+            self.draw_area(ax=ax[0], df=self.df, column_to_draw=column_to_draw, colors=cmap)
+            self.draw_area(ax=ax[1], df=self.scaled_df, column_to_draw=column_to_draw, colors=cmap)
             
             ax[0].locator_params(axis="both", integer=True, tight=True)
             ax[1].locator_params(axis="both", integer=True, tight=True)
-            self.legend_without_duplicate_labels(fig)
             plt.subplots_adjust(wspace=0.1)
+            
+        self.legend_without_duplicate_labels(fig)

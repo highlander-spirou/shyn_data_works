@@ -1,7 +1,7 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-def draw_barh(df, top=None, colors='pastel', y_invert=False):
+def draw_stacked_barh(df, top=None, colors='pastel', y_invert=False):
     """
     A wrapper for drawing plt's barh
     """
