@@ -6,6 +6,7 @@ from .data_card import CardComponent
 from .geographic_heatmap import HighlightProvince
 from .kde import draw_kde_plot
 from .stacked_barh import draw_stacked_barh
+from .radialtree import plot_radial_tree
 
 __all__ = [
     "AreaChart",
@@ -13,5 +14,6 @@ __all__ = [
     "CardComponent",
     "HighlightProvince",
     "draw_kde_plot",
-    "draw_stacked_barh"
+    "draw_stacked_barh",
+    "plot_radial_tree"
 ]
