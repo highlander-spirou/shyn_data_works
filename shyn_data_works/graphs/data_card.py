@@ -2,10 +2,7 @@ from jinja2 import Environment, FileSystemLoader
 from os import path
 from typing import Literal, TypedDict
 
-class ParamsDict(TypedDict):
-    small_text: str
-    big_text: str
-    render_img: Literal['<img />', '<svg></svg>']
+ParamsDict = TypedDict('ParamsDict', {'small_text': str, 'big_text': str, 'render_img': Literal['<img />', '<svg></svg>']})
 
 
 class CardComponent:
