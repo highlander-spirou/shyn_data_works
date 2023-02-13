@@ -1,6 +1,6 @@
 import json
-from .jinja_template import HTMLRenderEngine
-from .convert_rgba import convert_rgba
+from ..jinja_template import HTMLRenderEngine
+from ..convert_rgba import convert_rgba
 from typing import Optional, List
 
 class PyChartJs(HTMLRenderEngine):
