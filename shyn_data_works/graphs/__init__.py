@@ -7,6 +7,7 @@ from .geographic_heatmap import HighlightProvince
 from .kde import draw_kde_plot
 from .stacked_barh import draw_stacked_barh
 from .radialtree import plot_radial_tree
+from .py_chartjs import PyChartJs
 
 __all__ = [
     "AreaChart",
@@ -15,5 +16,6 @@ __all__ = [
     "HighlightProvince",
     "draw_kde_plot",
     "draw_stacked_barh",
-    "plot_radial_tree"
+    "plot_radial_tree",
+    "PyChartJs"
 ]
