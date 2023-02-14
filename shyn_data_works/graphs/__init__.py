@@ -8,6 +8,7 @@ from .kde import draw_kde_plot
 from .stacked_barh import draw_stacked_barh
 from .radialtree import plot_radial_tree
 from .py_chartjs import PyChartJs
+from .py_apexchart import PyApexCharts
 
 __all__ = [
     "AreaChart",
@@ -17,5 +18,6 @@ __all__ = [
     "draw_kde_plot",
     "draw_stacked_barh",
     "plot_radial_tree",
-    "PyChartJs"
+    "PyChartJs",
+    "PyApexCharts",
 ]
