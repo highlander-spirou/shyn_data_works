@@ -58,16 +58,19 @@ class PyChartJs(HTMLRenderEngine):
         self.core['data']['labels'] = axis_label 
         return self
     
-    def add_dataset(self, label, data, colors:Optional[List[str]] = None, alpha=0.2, **kwargs):
+    def add_dataset(self, label, data, colors:Optional[List[str]] = None, alpha=0.2, no_border=False, **kwargs):
         dataset = dict()
         dataset['label'] = label
         dataset['data'] = data
         
-        if colors is not None:
-            borderColors = colors
-            backgroundColors = [convert_rgba(i, alpha) for i in colors] #type: ignore
-            dataset['backgroundColor'] = backgroundColors
-            dataset['borderColor'] = borderColors
+        if no_border is True:
+          dataset['backgroundColor'] = colors
+        else:
+          if self.colors is not None:
+              borderColors = colors
+              backgroundColors = [convert_rgba(i, alpha) for i in colors]
+              dataset['backgroundColor'] = backgroundColors
+              dataset['borderColor'] = borderColors
             
         for index, item in kwargs.items():
             dataset[index] = item
