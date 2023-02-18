@@ -1,8 +1,7 @@
 import json
 from prodict import Prodict
-from typing import TypedDict, List
+from typing import TypedDict, List, Tuple
 from ..jinja_template import HTMLRenderEngine
-
 
 class ChartTypeInterface(Prodict):
     type: str
@@ -78,4 +77,71 @@ class PyApexCharts(HTMLRenderEngine):
               self.render_template(chartData=self.template_data)
             
         return self.html_str
-    
+
+
+def sns_gradient(cmap:str, min_num, max_num):
+    """
+    Six color gradient from sns.color_palette
+    """
+    bins = np.linspace(min_num, max_num, 7)
+    palette = sns.color_palette(cmap).as_hex() # type:ignore
+    i = 0
+    return_list = []
+    while i < len(bins)-1:
+        return_list.append((bins[i], bins[i+1], palette[i]))
+        i = i+1
+    return return_list
+
+
+def tailwind_gradient_oneside(palette:list, min_num, max_num):
+    """
+    The negative and positive use the same color palette
+    """
+    bins = np.linspace(min_num, max_num, 11)
+    i = 0
+    return_list = []
+    while i < len(bins) - 1:
+        return_list.append((bins[i], bins[i + 1], palette[i]))
+        i = i + 1
+    return return_list
+
+
+def tailwind_gradient_twosides(color_codes: Tuple[list, list], min_num, max_num):
+    """
+    The negative and positive use different hue palette
+    """
+    if min_num < 0:
+        bins_negative = np.linspace(min_num, 0, 10)
+        bins_positive = np.linspace(0, max_num, 10)[1:]
+        bins = np.concatenate((bins_negative, bins_positive))
+    else:
+        bins = np.linspace(min_num, max_num, 10)
+
+  
+    palette = color_codes[0][::-1] + color_codes[1][1:]
+    i = 0
+    return_list = []
+    while i < len(bins)-1:
+        return_list.append((bins[i], bins[i+1], palette[i]))
+        i = i+1
+    return return_list
+
+class GradientToApexRange:
+    def __init__(self, fn, palette, min_num, max_num):
+        self.fn = fn
+        self.palette = palette
+        self.min_num = min_num
+        self.max_num = max_num
+
+    def render_color(self):
+        self.schema = self.fn(self.palette, self.min_num, self.max_num)
+
+    def apex_range(self):
+        ranges = []
+        for i in self.schema:
+            ranges.append({'from': i[0], 'to': i[1], 'color': i[2]})
+        return ranges
+
+    def __call__(self):
+        self.render_color()
+        return self.apex_range()
