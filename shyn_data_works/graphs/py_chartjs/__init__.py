@@ -63,14 +63,14 @@ class PyChartJs(HTMLRenderEngine):
         dataset['label'] = label
         dataset['data'] = data
         
-        if no_border is True:
-          dataset['backgroundColor'] = colors
-        else:
-          if self.colors is not None:
-              borderColors = colors
-              backgroundColors = [convert_rgba(i, alpha) for i in colors]
-              dataset['backgroundColor'] = backgroundColors
-              dataset['borderColor'] = borderColors
+        if colors is not None:
+          if no_border is True:
+            dataset['backgroundColor'] = colors
+          else:
+                borderColors = colors
+                backgroundColors = [convert_rgba(i, alpha) for i in colors]
+                dataset['backgroundColor'] = backgroundColors
+                dataset['borderColor'] = borderColors
             
         for index, item in kwargs.items():
             dataset[index] = item
