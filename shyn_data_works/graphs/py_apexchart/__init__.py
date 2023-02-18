@@ -1,4 +1,5 @@
 import json
+import numpy as np
 from prodict import Prodict
 from typing import TypedDict, List, Tuple
 from ..jinja_template import HTMLRenderEngine
