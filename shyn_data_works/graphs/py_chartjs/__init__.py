@@ -12,6 +12,7 @@ class PyChartJs(HTMLRenderEngine):
   <head>
     <meta charset="UTF-8" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
   </head>
   <body>
     <div class="chart-container">
@@ -19,9 +20,12 @@ class PyChartJs(HTMLRenderEngine):
     </div>
 
     <script>
+      Chart.register(ChartDataLabels);
+      
       var data = JSON.parse(
         {{chartData}}
       )
+      {{jsScript}}
       const ctx = document.getElementById('myChart');
       new Chart(ctx, data);
     </script>
@@ -44,10 +48,15 @@ class PyChartJs(HTMLRenderEngine):
                   "mode": 'nearest',
                   "axis": 'x'
                 },
-                "plugins": {},
+                "plugins": {
+                  "datalabels": {
+                    'display': False 
+                  }
+                },
                 "scale": {}
             }
         }
+        self.js = None
     
         
     def add_chart_type(self, chart_type):
@@ -103,9 +112,26 @@ class PyChartJs(HTMLRenderEngine):
     def turn_off_legend(self):
         self.core['options']['plugins']['legend'] = {'display': False}
         return self
-        
+    
+    def turn_on_datalabels(self):
+        self.core['options']['plugins']['datalabels'] = {
+          'display': True,
+          'color': 'white',
+          'font': {
+            'weight': 'bold',
+            'size': 13,
+          }
+        }
+        return self
+    
+    def add_js(self, js):
+        self.js = js
+        return self
 
     def serialize(self):
         self.template_data = "'" + json.dumps(self.core) + "'"
-        self.render_template(chartData=self.template_data, width=self.width, height=self.height)
+        if self.js is not None:
+          self.render_template(chartData=self.template_data, jsScript=self.js, width=self.width, height=self.height)
+        else:
+          self.render_template(chartData=self.template_data, width=self.width, height=self.height)
         return self.html_str
