@@ -13,6 +13,7 @@ class PyChartJs(HTMLRenderEngine):
     <meta charset="UTF-8" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-stacked100@1.3.0"></script>
   </head>
   <body>
     <div class="chart-container">
@@ -21,6 +22,7 @@ class PyChartJs(HTMLRenderEngine):
 
     <script>
       Chart.register(ChartDataLabels);
+      Chart.register(ChartjsPluginStacked100.default)
       
       var data = JSON.parse(
         {{chartData}}
