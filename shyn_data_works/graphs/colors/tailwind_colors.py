@@ -1,6 +1,11 @@
 from typing import Literal
 
 def get_tailwind_colors(version: Literal['v2', 'custom'], name:str, orient:Literal['dict', 'list'] = 'dict'):
+    """
+    v2 color schemes: https://davidpiesse.github.io/tailwind-md-colours/
+    
+    custom color schemes: tinyurl.com/mv2u2ran
+    """
     versions = {
         'v2': tailwind_colors_v2,
         'custom': tailwind_colors_custom

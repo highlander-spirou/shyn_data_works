@@ -123,6 +123,10 @@ class PyChartJs(HTMLRenderEngine):
           }
         }
         return self
+
+    def change_datalabel_colors(self, colors: List[str]):
+        self.core['options']['plugins']['datalabels']['color'] = colors
+        return self
     
     def add_js(self, js):
         self.js = js
